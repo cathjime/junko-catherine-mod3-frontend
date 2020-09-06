@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                 `
                 const recipeDetailButton = cuisineContainer.children[2].children[1]
                 let recipeDetails = cuisineContainer.children[2].children[2]
-                //console.log(recipeDetails)
+                
                 recipeDetailButton.addEventListener("click", function(e){
                     recipeDropdown = !recipeDropdown
                     if (recipeDropdown) {
@@ -50,6 +50,16 @@ document.addEventListener("DOMContentLoaded", function(e){
                         recipeDetails.style.display = "none";
                         recipeDetailButton.textContent = "See Detail"
                       }
+                })
+
+                const likeButton = cuisineContainer.children[2].children[0]
+                likeButton.addEventListener("click", function(e){
+                    if(likeButton.textContent === "Like ❤️"){
+                        likeButton.textContent = "1 Like ❤️"
+                    } else {
+                        let updatedLikes = parseInt(likeButton.textContent) + 1
+                        likeButton.textContent = `${updatedLikes} Likes ❤️`
+                    }
                 })
             })
             
