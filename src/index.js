@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
                 const likeButton = cuisineContainer.children[2].children[0]
                 likeButton.addEventListener("click", function(e){
+                    //functionality not complete - will need to patch these changes to the db so they persist
                     if(likeButton.textContent === "Like ❤️"){
                         likeButton.textContent = "1 Like ❤️"
                     } else {
