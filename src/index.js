@@ -84,17 +84,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                         renderRecipe(recipe)
                     })
                 }
-
-//                 // const recipeDetails = document.querySelector(".recipe-detail") 
-//                 // console.log(recipeDetails)
-//                 // const recipeDetailButton = document.querySelector(".recipe-detail-btn")
-//                 // console.log(recipeDetailButton)
-
-
-//             //const commentForm = document.querySelector(".comment-form")
-//             // const commentButton = document.querySelector(".comment-button")
-
-                
+ 
                 secondPageContainer.addEventListener("click", function(e){
                     if(e.target.className === "recipe-detail-btn"){
                         const recipeDetails = e.target.nextElementSibling
@@ -141,24 +131,26 @@ document.addEventListener("DOMContentLoaded", function(e){
 
 //add comments to database 
 
-//                 // commentForm.addEventListener("submit", function(e){
-//                 //     e.preventDefault()
-//                 //     let newComment = document.querySelector(".comment-input").value
+            const commentForm = document.querySelector(".comment-form")
+     
+                commentForm.addEventListener("submit", function(e){
+                    e.preventDefault()
+                    let newComment = document.querySelector(".comment-input").value
 
-//                 //     // fetch(commentsUrl, {
-//                 //     //     method: "POST",
-//                 //     //     headers:{
-//                 //     //         "Content-Type": "application.json",
-//                 //     //         "Accepts": "application/json"
-//                 //     //     },
-//                 //     //     body: JSON.stringify({
-//                 //     //         comments: newComment
-//                 //     //     })
-//                 //     // })
-//                 //     // .then(resp => resp.json())
-//                 //     // .then(recipe => renderRecipe(recipe))
-//                 //       
-//                 // })
+                    // fetch(commentsUrl, {
+                    //     method: "POST",
+                    //     headers:{
+                    //         "Content-Type": "application.json",
+                    //         "Accepts": "application/json"
+                    //     },
+                    //     body: JSON.stringify({
+                    //         comments: newComment
+                    //     })
+                    // })
+                    // .then(resp => resp.json())
+                    // .then(recipe => renderRecipe(recipe))
+                      
+                })
 
 
 
