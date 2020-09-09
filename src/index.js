@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function(e){
     const apiUrl = "http://localhost:3000/api/v1/cuisines"
     const commentsUrl = "http://localhost:3000/api/v1/comments"
     let recipeContent
-    let allRecipesArray
 
     let fetchApiData = () => {
         fetch(apiUrl)
@@ -18,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
     cuisineContainer.addEventListener("click", function(e){
         if(e.target.className === "col"){
+            console.log("click")
             let cuisineType = e.target.textContent.toLowerCase()
             let cuisineCapitalized = e.target.textContent
             
@@ -46,8 +46,6 @@ document.addEventListener("DOMContentLoaded", function(e){
                     fetch(`${apiUrl}/${cuisineType}/?ingredient=${formInput}`)
                     .then(resp => resp.json())
                     .then(data => {
-                        allRecipesArray = data 
-                        console.log(allRecipesArray)
                         renderRecipes(data)})  
                 }
                 fetchFilteredRecipes()
@@ -118,24 +116,6 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
     })
 })
-
-
- /*
-//                     const recipeDetailButton = document.querySelector(".recipe-detail-btn")
-//                     const recipeDetails = document.querySelector(".recipe-detail")
-//                     const commentForm = document.querySelector(".comment-form")
-//                     // const commentButton = document.querySelector(".comment-button")
-//                     recipeDetailButton.addEventListener("click", function(e){
-//                     recipeDropdown = !recipeDropdown
-//                     if (recipeDropdown) {
-//                         recipeDetails.style.display = "block";
-//                         recipeDetailButton.textContent = "Less Detail"
-//                       } else {
-//                         recipeDetails.style.display = "none";
-//                         recipeDetailButton.textContent = "See Detail"
-//                       }
-//                     })
-//                 */
 
 //add comments to database 
 
