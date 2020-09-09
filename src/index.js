@@ -54,8 +54,6 @@ document.addEventListener("DOMContentLoaded", function(e){
 //                 //render single recipe
                 let renderRecipe = (recipe) => {
                     let recipeId = recipe.id
-                    console.log(recipe.content)
-                    //console.log(recipeContent)
                     let recipeDiv = document.createElement("div")
                     recipeDiv.className = "filtered-recipes"
                     recipeDiv.innerHTML = 
@@ -85,10 +83,10 @@ document.addEventListener("DOMContentLoaded", function(e){
                     })
                 }
  
+                //toggle functionality
                 secondPageContainer.addEventListener("click", function(e){
                     if(e.target.className === "recipe-detail-btn"){
                         const recipeDetails = e.target.nextElementSibling
-                                console.log("button click working")
                         if(recipeDetails.id === e.target.dataset.id && recipeDetails.style.display === "none"){
                             recipeDetails.style.display = "block"
                             e.target.textContent = "See Less"
@@ -100,10 +98,31 @@ document.addEventListener("DOMContentLoaded", function(e){
                     }
                 })
              
+                //add comments to database 
 
+                secondPageContainer.addEventListener("submit", function(e){
+                    e.preventDefault()
+                    let newComment = document.querySelector(".comment-input").value
+                    let commentButton = e.target.children[1]
+                    console.log(commentButton)
+
+                //     fetch(commentsUrl, {
+                //         method: "POST",
+                //         headers:{
+                //             "Content-Type": "application.json",
+                //             "Accepts": "application/json"
+                //         },
+                //         body: JSON.stringify({
+                //             comments: newComment
+                //         })
+                //     })
+                //     .then(resp => resp.json())
+                //     .then(recipe => renderRecipe(recipe))
+                })
                
               
             })
+
         } else if (e.target.className === "filter-btn") {
             // e.target.dataset.status = e.target.dataset.status === "off" ? "on" : "off"
             if (e.target.dataset.status === "off") {
@@ -127,30 +146,10 @@ document.addEventListener("DOMContentLoaded", function(e){
         // //     console.log(allRecipesArray)
         // //         renderRecipes(data)})  
     }
+
 })
 
-//add comments to database 
 
-            const commentForm = document.querySelector(".comment-form")
-     
-                commentForm.addEventListener("submit", function(e){
-                    e.preventDefault()
-                    let newComment = document.querySelector(".comment-input").value
-
-                    // fetch(commentsUrl, {
-                    //     method: "POST",
-                    //     headers:{
-                    //         "Content-Type": "application.json",
-                    //         "Accepts": "application/json"
-                    //     },
-                    //     body: JSON.stringify({
-                    //         comments: newComment
-                    //     })
-                    // })
-                    // .then(resp => resp.json())
-                    // .then(recipe => renderRecipe(recipe))
-                      
-                })
 
 
 
