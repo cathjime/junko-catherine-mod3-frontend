@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function(e){
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          likes: likes
+          likes: likesgit
         })
       }
       fetch(`http://localhost:3000/api/v1/recipes/${id}`, options)
