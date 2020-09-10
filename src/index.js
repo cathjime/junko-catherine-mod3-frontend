@@ -9,12 +9,6 @@ document.addEventListener("DOMContentLoaded", function(e){
     let cuisineType = ""
     let ingredient = ""
 
-    // let fetchApiData = () => {
-    //     fetch(apiUrl)
-    //     .then(resp => resp.json())
-    //     .then(data => console.log(data))
-    // }
-    // fetchApiData()
 
     let addCommentToList = (ul, comment) => {
         let newCommentLi = document.createElement("li")
@@ -111,11 +105,22 @@ document.addEventListener("DOMContentLoaded", function(e){
                             "content": newComment,
                             "recipe_id": recipeId
                         })
-                    })
-                     
+                    })   
                 })
-                
-              
+
+    //add likes and persist to db
+                recipesContainer.addEventListener("click", function(e){
+                    if(e.target.className === "like-btn"){
+                        if(e.target.textContent === "Like ❤️"){
+                            e.target.textContent = "1 Like ❤️"
+                        } else {
+                            e.target.textContent = parseInt(e.target.textContent) + 1
+                            let updatedLike = e.target.textContent = `${e.target.textContent} Likes ❤️`
+                            
+                        }
+                    }
+                })
+
             })
         } else if (e.target.className === "filter-btn") {
             if (e.target.dataset.status === "off") {
@@ -134,6 +139,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     
               //render all recipes
     const renderRecipes = (container, recipesArray) => {
+        
         document.querySelector('.recipe-container').innerHTML = ""
         recipesArray.forEach(recipe => {
             renderRecipe(container, recipe)
@@ -157,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         <div class="recipe-info">
             <img src="${recipe.image}">
             <h3>${recipe.title}</h3>
-            <button class="like-btn">Like ❤️</button>
+            <button class="like-btn" data-id=${recipeId}>Like ❤️</button>
             <button class="recipe-detail-btn" data-id=${recipeId}>See Detail</button> 
         </div>
         <div class="recipe-detail" style="display: none;">
