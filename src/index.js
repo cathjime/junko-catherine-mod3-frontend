@@ -205,22 +205,22 @@ document.addEventListener("DOMContentLoaded", function(e){
     }
 
     //patch likes
-    const patchLikes = (id, likes) => {
-        fetch(`${apiUrl}/${cuisineType}?ingredient/${id}`, {
-            method: "PATCH",
-            headers:{
-                "Content-Type": "application/json",
-                "Accepts": "application/json"
-            },
-            body: JSON.stringify({
-                "likes":likes
-            })
-        })   
+    function patchLikes(id, likes) {
+        const options = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          likes: likes
+        })
+      }
+      fetch(`http://localhost:3000/api/v1/recipes/${id}`, options)
     }
 
-
-
 })
+
 
 
 
