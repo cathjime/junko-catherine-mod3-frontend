@@ -108,15 +108,17 @@ document.addEventListener("DOMContentLoaded", function(e){
                     })   
                 })
 
-    //add likes and persist to db
+    //add and increment likes 
                 recipesContainer.addEventListener("click", function(e){
                     if(e.target.className === "like-btn"){
+                        let id = e.target.dataset.id
                         if(e.target.textContent === "Like ❤️"){
-                            e.target.textContent = "1 Like ❤️"
+                            let updatedLike = e.target.textContent = "1 Like ❤️"
+                            patchLikes(id,updatedLike)
                         } else {
                             e.target.textContent = parseInt(e.target.textContent) + 1
                             let updatedLike = e.target.textContent = `${e.target.textContent} Likes ❤️`
-                            
+                            patchLikes(id,updatedLike)
                         }
                     }
                 })
@@ -201,7 +203,26 @@ document.addEventListener("DOMContentLoaded", function(e){
             .then(data => renderRecipes(container, data))  
         }
     }
+
+    //patch likes
+    const patchLikes = (id, likes) => {
+        fetch(`${apiUrl}/${cuisineType}?ingredient/${id}`, {
+            method: "PATCH",
+            headers:{
+                "Content-Type": "application/json",
+                "Accepts": "application/json"
+            },
+            body: JSON.stringify({
+                "likes":likes
+            })
+        })   
+    }
+
+
+
 })
+
+
 
 
 
