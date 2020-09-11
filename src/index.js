@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function(e){
             cuisineType = e.target.id
             let cuisineCapitalized = e.target.textContent
 
-            // Highlight the clicked button and hide the others
             document.querySelectorAll(".cuisine").forEach(e => e.classList.remove("clicked"))
             e.target.classList.add("clicked")
             document.querySelectorAll(".cuisine").forEach(e => {
@@ -67,13 +66,13 @@ document.addEventListener("DOMContentLoaded", function(e){
 
                 const secondPageContainer = document.querySelector("#second-page")                
                 secondPageContainer.addEventListener("click", function(e){
-                    if(e.target.classList.contains("recipe-detail-btn")){
+                    if(e.target.className === "recipe-detail-btn"){
                         const recipeDetails = e.target.parentElement.nextElementSibling
                             console.log("button click working")
-                        if(recipeDetails.style.display === "none"){
+                        if(recipeDetails.id === e.target.dataset.id && recipeDetails.style.display === "none"){
                             recipeDetails.style.display = "block"
                             e.target.textContent = "See Less"
-                        } else if(recipeDetails.style.display === "block"){
+                        } else if(recipeDetails.id === e.target.dataset.id && recipeDetails.style.display === "block"){
                             recipeDetails.style.display = "none"
                             e.target.textContent = "See Detail"
                         }
@@ -137,6 +136,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     const renderRecipe = (container, recipe) => {
        
         let recipeId = recipe.id
+
+        const ingredients = []
+        recipe.ingredients.forEach( ingredient => ingredients.push(ingredient.name) )
         const content = recipe.content === null ? "Sorry, this content is not available..." : recipe.content
         
         let recipeDiv = document.createElement("div")
@@ -148,16 +150,11 @@ document.addEventListener("DOMContentLoaded", function(e){
         <div class="recipe-info">
             <img src="${recipe.image}">
             <h3>${recipe.title}</h3>
-            <button class="like-btn"><i class='fas'>&#xf004;</i></button>
-            <span>${recipe.likes} Likes</span>
-            <button class="recipe-detail-btn btn btn-info btn-sm" data-id=${recipeId}>See Detail</button> 
+            <button class="like-btn">Like ❤️</button>
+            <button class="recipe-detail-btn" data-id=${recipeId}>See Detail</button> 
         </div>
         <div class="recipe-detail" style="display: none;">
-            <div class="ingredient">
-                <h5>Ingredients:</h5>
-                <ul>
-                </ul>
-            </div>
+            <span class="ingredient">Ingredients: ${ingredients.join(", ")}</span>
             <span>${content}</span>
         </div>
 
@@ -171,14 +168,6 @@ document.addEventListener("DOMContentLoaded", function(e){
         `
 
         container.append(recipeDiv)
-
-        const ingredientsUl = recipeDiv.children[1].children[0].children[1]
-        recipe.ingredients.forEach(ingredient => {
-            const li = document.createElement('li')
-            li.textContent = `${ingredient.name} ${ingredient.amount}`
-            ingredientsUl.append(li)
-        })
-
         let commentsUl = recipeDiv.querySelector(".comments")
         recipe.comments.forEach(comment => {
             addCommentToList(commentsUl, comment.content)
