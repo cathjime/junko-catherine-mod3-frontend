@@ -51,10 +51,17 @@ document.addEventListener("DOMContentLoaded", function(e){
                 </div><br>
                 `
 
-                document.querySelector(".cuisine-bar").style.background = `url(./images/${cuisineType}.jpg) no-repeat center`
+                document.querySelector(".cuisine-bar").style.background = `url(./images/${cuisineType}.jpg) center center no-repeat`
                 document.querySelector(".cuisine-bar").style.backgroundSize = "cover"
+
+                // Home button
+                const homeBtn = document.createElement("button")
+                document.querySelector(".container").append(homeBtn)
+                homeBtn.textContent = "Back"
+                homeBtn.classList.add("home-btn", "btn", "btn-info")
+
                 const recipeContainer = document.querySelector(".recipe-container")
-            
+                
                 let fetchFilteredRecipes = () => {
                     fetch(`${apiUrl}/${cuisineType}/?ingredient=${ingredient}`)
                     .then(resp => resp.json())
@@ -64,9 +71,9 @@ document.addEventListener("DOMContentLoaded", function(e){
                 }
                 fetchFilteredRecipes()
 
-                const secondPageContainer = document.querySelector("#second-page")                
-                secondPageContainer.addEventListener("click", function(e){
-                    if(e.target.className === "recipe-detail-btn"){
+                // const secondPageContainer = document.querySelector("#second-page")                
+                document.addEventListener("click", function(e){
+                    if(e.target.classList.contains("recipe-detail-btn")){
                         const recipeDetails = e.target.parentElement.nextElementSibling
                             console.log("button click working")
                         if(recipeDetails.id === e.target.dataset.id && recipeDetails.style.display === "none"){
@@ -77,6 +84,8 @@ document.addEventListener("DOMContentLoaded", function(e){
                             e.target.textContent = "See Detail"
                         }
                 
+                    } else if (e.target.classList.contains("home-btn")) {
+                        location.reload()
                     }
                 })
 
@@ -140,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         const ingredients = []
         recipe.ingredients.forEach( ingredient => ingredients.push(ingredient.name) )
         const content = recipe.content === null ? "Sorry, this content is not available..." : recipe.content
+        const commentCount = recipe.comments.length
         
         let recipeDiv = document.createElement("div")
         recipeDiv.dataset.id = recipe.id
@@ -150,21 +160,27 @@ document.addEventListener("DOMContentLoaded", function(e){
         <div class="recipe-info">
             <img src="${recipe.image}">
             <h3>${recipe.title}</h3>
-            <button class="like-btn">Like ❤️</button>
-            <button class="recipe-detail-btn" data-id=${recipeId}>See Detail</button> 
+            <button class="like-btn"><i class='fas'>&#xf004;</i></button>
+            <span>${recipe.likes} Likes | ${commentCount} comments | </span>
+            <button class="recipe-detail-btn btn btn-info btn-sm" data-id=${recipeId}>See Detail</button> 
         </div>
         <div class="recipe-detail" style="display: none;">
-            <span class="ingredient">Ingredients: ${ingredients.join(", ")}</span>
+            <div class="ingredient">
+                <h5>📝 Ingredients</h5>
+                <ul>
+                </ul>
+            </div>
+            <h5>📋 Instruction</h5>
             <span>${content}</span>
+            <h5>💬 Comments</h5>
+            <ul class="comments">
+            </ul>
+            <form class="comment-form" id=${recipe.id}>
+                <input class="comment-input" type="text" name="comment" placeholder="Add a comment..."/>
+                <button class="comment-button btn btn-secondary btn-sm" type="submit">Add Comment</button>
+            </form>
+            <br>
         </div>
-
-        <ul class="comments">
-        </ul>
-        <form class="comment-form" id=${recipe.id}>
-            <input class="comment-input" type="text" name="comment" placeholder="Add a comment..."/>
-            <button class="comment-button" type="submit">Add Comment</button>
-        </form>
-        <br>
         `
 
         container.append(recipeDiv)
